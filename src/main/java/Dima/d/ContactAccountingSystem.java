@@ -122,7 +122,7 @@ public class ContactAccountingSystem {
         System.out.println("Просмотреть контакты: ");
 
         for(int i = 0; i < contacts; i++) {
-            System.out.println(count + ". " + name[i] + " - " + phoneNumbers[i]);
+            System.out.println( (i + 1) + ". " + name[i] + " - " + phoneNumbers[i]);
         }
 
 
@@ -146,8 +146,13 @@ public class ContactAccountingSystem {
                 System.out.println("Пользователь найден : " + "\n" + name[i] + " - " + phoneNumbers[i]);
                 break;
             }
+            if(!name[i].equals(input)) {
+                System.out.println("Пользовыатель не найден!");
+                break;
+            }
 
         }
+
     }
     private static void deleteContact(Scanner scanner) {
         System.out.println("Удалите существующий контакт" + "\n" + "Введите имя");
@@ -158,6 +163,10 @@ public class ContactAccountingSystem {
             if(name[i].equals(nameDelete)) {
                 index = i;
                 break;
+            }
+            if (!name[i].equals(nameDelete)) {
+                System.out.println("Пользователь не найден!");
+                return;
             }
 
         }if(index != -1){
