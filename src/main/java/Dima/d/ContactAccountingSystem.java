@@ -1,22 +1,12 @@
 package Dima.d;
-
-
-
-import org.w3c.dom.ls.LSOutput;
-
-import java.sql.SQLOutput;
 import java.util.Scanner;
-
-
-import static java.lang.Integer.MAX_VALUE;
-
 
 public class ContactAccountingSystem {
 
     private static final int contacts = 3;
     private static final String[] name = new String[contacts];
     private static final String[] phoneNumbers = new String[contacts];
-    private static int count = 0;
+
 
 
     public static void main(String[] args) {
@@ -47,17 +37,17 @@ public class ContactAccountingSystem {
                 case "1" :
                     addContact(scanner);
                     System.out.println("Для продолжения снова введите цифру 1-5");
-                    System.out.println(menu.toString());
+                    System.out.println(menu);
                     break;
                 case "2":
                     viewContacts();
                     System.out.println("Для продолжения снова введите цифру 1-5");
-                    System.out.println(menu.toString());
+                    System.out.println(menu);
                     break;
                 case "3":
                     searchContact(scanner);
                     System.out.println("Для продолжения снова введите цифру 1-5");
-                    System.out.println(menu.toString());
+                    System.out.println(menu);
                     break;
                 case "4":
                     deleteContact(scanner);
@@ -76,9 +66,9 @@ public class ContactAccountingSystem {
     }
 
     private static void addContact(Scanner scanner) {
-
-
-        for(int i = 0; i < contacts;i++ ) {
+        int mass = 0;
+        int choice = name.length;
+        for(int i = 0; i < choice;i++ ) {
             if(name[i] == null) {
                 System.out.println("Для добавления контакта укажите Имя и номер");
                 System.out.println("Укажите имя...");
@@ -110,10 +100,15 @@ public class ContactAccountingSystem {
                         break;
                     }
                 }
-
-            }else if(name[i] != null) {
-                System.out.println(count++ + " " + "Массив заполнен!");
             }
+        }
+        for(String a : name){
+            if(a != null) {
+                mass++;
+            }
+        }
+        if(mass == contacts) {
+            System.out.println("Массив заполнен");
         }
     }
 
@@ -121,16 +116,17 @@ public class ContactAccountingSystem {
 
         System.out.println("Просмотреть контакты: ");
 
-        for(int i = 0; i < contacts; i++) {
-            System.out.println( (i + 1) + ". " + name[i] + " - " + phoneNumbers[i]);
+        int view = name.length;
+        for(int i = 0; i < view; i++) {
+            if(name[i] != null) {
+                System.out.println( (i + 1) + ". " + name[i] + " - " + phoneNumbers[i]);
+            }
         }
-
-
     }
     private static void searchContact(Scanner scanner) {
 
 
-        System.out.println("Введите имя или номер для поиска ");
+        System.out.println("Введите имя для поиска ");
         int index = name.length;
         String input;
         do{
@@ -141,15 +137,18 @@ public class ContactAccountingSystem {
             }
         }while (!input.matches("[а-яА-ЯёЁa-zA-Z]+"));
 
+        int value = -1;
         for (int i = 0; i < index; i++) {
-            if(name[i].equals(input)) {
+            if(name[i] != null && name[i].equals(input)) {
+                value = i;
                 System.out.println("Пользователь найден : " + "\n" + name[i] + " - " + phoneNumbers[i]);
                 break;
             }
-            if(!name[i].equals(input)) {
-                System.out.println("Пользовыатель не найден!");
-                break;
-            }
+
+
+        }
+        if(value == -1) {
+            System.out.println("Пользовыатель не найден!");
 
         }
 
@@ -159,28 +158,28 @@ public class ContactAccountingSystem {
         String nameDelete = scanner.nextLine().trim().toLowerCase();
         int count = name.length;
         int index = -1;
+
         for(int i = 0; i < count; i++) {
-            if(name[i].equals(nameDelete)) {
+            if (name[i] != null && name[i].equals(nameDelete)) {
                 index = i;
                 break;
-            }
-            if (!name[i].equals(nameDelete)) {
-                System.out.println("Пользователь не найден!");
-                return;
-            }
 
-        }if(index != -1){
+            }
+        }
+        if(index == -1) {
+            System.out.println("Пользователя не существует!");
+        }
+        else{
             for(int i = index; i < count - 1 ; i++) {
                 name[i] = name[i + 1];
                 name[i + 1] = null;
                 phoneNumbers[i] = phoneNumbers[i + 1];
                 phoneNumbers[i + 1] = null;
-                count--;
-
             }
-        }
-        System.out.println("Успешко удален!");
-    }
+            System.out.println("Успешко удален!");
 
+        }
+
+    }
 
 }
