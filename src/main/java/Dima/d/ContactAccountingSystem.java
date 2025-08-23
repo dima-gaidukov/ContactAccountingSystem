@@ -6,6 +6,7 @@ public class ContactAccountingSystem {
     private static final int contacts = 3;
     private static final String[] name = new String[contacts];
     private static final String[] phoneNumbers = new String[contacts];
+    private static final String menuMain = "Для продолжения снова введите цифру 1-5 ";
 
 
 
@@ -36,23 +37,23 @@ public class ContactAccountingSystem {
             switch(input){
                 case "1" :
                     addContact(scanner);
-                    System.out.println("Для продолжения снова введите цифру 1-5");
+                    System.out.println(menuMain);
                     System.out.println(menu);
                     break;
                 case "2":
                     viewContacts();
-                    System.out.println("Для продолжения снова введите цифру 1-5");
+                    System.out.println(menuMain);
                     System.out.println(menu);
                     break;
                 case "3":
                     searchContact(scanner);
-                    System.out.println("Для продолжения снова введите цифру 1-5");
+                    System.out.println(menuMain);
                     System.out.println(menu);
                     break;
                 case "4":
                     deleteContact(scanner);
-                    System.out.println("Для продолжения снова введите цифру 1-5");
-                    System.out.println(menu.toString());
+                    System.out.println(menuMain);
+                    System.out.println(menu);
                     break;
                 case "5":
                     System.out.println("Всего хорошего)");
@@ -170,11 +171,16 @@ public class ContactAccountingSystem {
             System.out.println("Пользователя не существует!");
         }
         else{
-            for(int i = index; i < count - 1 ; i++) {
-                name[i] = name[i + 1];
-                name[i + 1] = null;
-                phoneNumbers[i] = phoneNumbers[i + 1];
-                phoneNumbers[i + 1] = null;
+            for(int i = index; i <= count - 1 ; i++) {
+                if( i == count - 1){
+                    name[i] = null;
+                    phoneNumbers[i] = null;
+                }else{
+                    name[i] = name[i + 1];
+                    name[i + 1] = null;
+                    phoneNumbers[i] = phoneNumbers[i + 1];
+                    phoneNumbers[i + 1] = null;
+                }
             }
             System.out.println("Успешко удален!");
 
